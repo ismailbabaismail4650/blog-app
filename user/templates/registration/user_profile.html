@@ -1,0 +1,55 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>User_Profile</h1><hr>
+<br>
+<div class="card mb-3" >
+    <div class="row no-gutters">
+      <div class="col-md-2"><br>
+  {% if page_user.profile_pic %}      
+      <img src ="{{page_user.profile_pic.url}}" width="100" height="100" class="rounded-circle">
+  {% else %}
+      <img src ="{% static 'base/images/pic.png'%}" width="100" height="100" class="rounded-circle">
+      
+  {% endif %}
+  </div>
+      
+<p class = "small text-muted">
+
+
+
+{% if post.author.profile.website_link %}
+    
+    <a href ="{{ page_user.website_link }}">website</a> |
+
+          
+{% endif %}
+          
+
+{% if page_user.facebook_link %}
+    <a href ="{{ page_user.facebook_link }}">facebook</a> |
+
+{% endif %}
+
+
+{% if page_user.ig_link %}
+    <a href ="{{ page_user.ig_link }}">ig</a> |
+            
+
+{% endif %}
+{% if page_user.X %}
+    <a href ="{{ page_user.X }}">X</a> 
+{% endif %}
+      </p>
+    
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{page_user}}</h5>
+          <p class="card-text">{{page_user.bio}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+{% endblock content %}

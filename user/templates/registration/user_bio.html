@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} 
+     User_bio..
+{% endblock title %}
+
+{% block content %}
+    {% if user.is_authenticated%}
+        {% if user.id == profile.user.id%}
+            <h1> User_bio..</h1><hr><br><br>
+             <div class = "form-group">
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <a href ="{% url 'password'%}" class="btn btn-secondary">chage_Password</a> 
+            <button class="btn btn-secondary">user_bio</button>
+
+            </div>
+        {% else %}
+            sorry you cant make changes to this profile
+        {% endif %}
+    {%else%}
+        You're not login 
+
+    {% endif %}      
+{% endblock content %}

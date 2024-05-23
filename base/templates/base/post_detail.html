@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %} 
+     {{post.title_tag}} 
+{% endblock title %}
+{% block content %}
+
+    {% if user.is_authenticated%}
+    <h1> {{post.title}}</h1>
+    <small>By:{{post.author.username}}</small><br><hr>
+    <p>{{post.category}}</p>
+    {% if post.header_img %}
+    <img src = "{{post.header_img.url}}" width="100" height="100">
+    {% endif %}
+        
+    <p>{{post.content|safe}}</p>
+    Posted_on: {{post.date_posted}}<br>
+       
+        <hr>
+        <br>
+        <form action = "{% url 'like' post.pk %}" method="POST">
+            {% csrf_token %}
+            {% if liked %}
+                <button type = "submit", name ="post_id", value = "{{post.id}}", class = "btn btn-danger btn-sm">unlike</button> - {{total_likes}} Likes
+
+            {% else %}
+                <button type = "submit", name ="post_id", value = "{{post.id}}", class = "btn btn-primary btn-sm">like</button> - {{total_likes}} Likes
+
+            {% endif %}
+                {%else%}
+        You're not login 
+    {% endif %} 
+    <br><br>
+    <h2>comments...</h2>
+    <a href ="{% url 'comment' post.pk %}">add a comment</a><br>
+    {% if not post.comments.all %}
+            No comment yet
+    {% else %}
+    
+    <br>
+            {% for comment in post.comments.all %}
+                <strong>{{comment.name}}--
+                        {{comment.date_added}}
+                </strong>
+                <br>
+                {{comment.body}}
+
+            {% endfor %}
+
+    {%endif%}
+    <br><br>
+    <hr>
+ {% if user.id == post.author.id%} 
+            
+    <a href ="{% url 'home'%}" class="btn btn-secondary">back</a> - <a href ="{% url 'edit' post.pk %}" class="btn btn-secondary">Edit</a> <a href ="{% url 'delete' post.pk %}" class="btn btn-secondary">Delete</a>
+{% endif %}
+{% endblock content %}
+

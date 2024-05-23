@@ -1,0 +1,20 @@
+{% extends "base/base.html" %}
+
+
+{% block content %}
+{{post.author}}
+<h1>POST</h1><hr>
+    <ul>
+        {% if user.is_authenticated%}
+        {% for post in object_list %}
+            <li> <a href ="{% url 'detail' post.pk%}"> {{post.title}}</a>  <a href ="{% url 'category' post.category|slugify %}">--{{post.category}}</a>  ---{{post.author.first_name}}--{{post.author.last_name}} ---{{post.date_posted}}<br>
+                {% if user.id == post.author.id%}
+                
+                    {{post.snippet|safe}}<small> <a href ="{% url 'edit' post.pk%}">Edit</a> <a href ="{% url 'delete' post.pk%}">Delete</a> </small><br>
+                {% endif %}
+        {% endfor %}
+        {%else%}
+        You're not login 
+        {% endif %}
+    </ul>
+{% endblock content %}

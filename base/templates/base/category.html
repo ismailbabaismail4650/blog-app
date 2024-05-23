@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+
+{% block content %}
+{% if category_posts %}
+    <h1>{{cats}}</h1>
+    <ul>
+        {% if user.is_authenticated%}
+        {% for post in category_posts %}
+            <li> <a href ="{% url 'detail' post.pk%}"> {{post.title}} --{{post.category}}</a>  ---{{post.author.first_name}}--{{post.author.last_name}} ---{{post.date_posted}}<br>
+            {{post.content|slice:":50"}}<small> <a href ="{% url 'edit' post.pk%}">Edit</a> <a href ="{% url 'delete' post.pk%}">Delete</a> </small><br>
+        {% endfor %}
+        {%else%}
+        You're not login 
+        {% endif %}
+        
+    </ul>
+{% else %}
+<p> Sorry this CATEGORY does not exist</p>
+{% endif %}
+
+
+{% endblock content %}
+
+    
+       
+    
